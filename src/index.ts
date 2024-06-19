@@ -5,12 +5,7 @@ const app = express().use(cors({ optionsSuccessStatus: 200 }))
 
 app.get("/api/:date?", (req, res) => {
     const input = req.params.date
-    if (!input) {
-        const date = new Date()
-        return res.json({ utc: date.toUTCString(), unix: date.getTime() })
-    }
-
-    const date = new Date(isNaN(Number(input)) ? input : Number(input))
+    const date = input ? new Date(isNaN(Number(input)) ? input : Number(input)) : new Date()
 
     if (date.toString() === "Invalid Date") {
         res.json({ error: "Invalid Date" })
